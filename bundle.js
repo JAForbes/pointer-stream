@@ -1,1 +1,0 @@
-console.error("Error: Cannot find module 'lib' from 'C:\\Users\\James\\src\\harth\\pointer-stream'");
