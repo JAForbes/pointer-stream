@@ -1,32 +1,34 @@
 pointer-stream
 ==============
 
-A tiny API for both mouse and touch events.
-Convenient streaming interface for scale, drag & movement.
+Convenient, concise, streaming interface for scale, drag & movement.
+A single API for mouse and touch events in 3.3k gzipped (9k minified)
 
+[Live Example](http://james-forbes.com/pointer-stream)
 
-```js
-{ {offset:{x,y}, scale:{min,max} }} =>
-
-	{ mousedown: stream Number
-	, movement: stream { x: Number, y: Number }
-	, move: stream { x: Number, y: Number }
-	, dragging: stream Boolean
-	, pinching: stream Number
-	, wheeling: stream Number
-	, scale: stream Number
-	, coords: stream { x: Number, y: Number }
-	, end: stream Boolean?
-	, settings:
-		{ scale: { min: Number, max: Number }
-		, offset: { x: stream Number, y: stream Number}
-		}
-	}
-
-```
 
 Quick Start
 -----------
+
+
+#### Installation
+
+`npm install pointer-stream`
+
+
+Drop `pointer-stream.min.js` in your html file.
+
+```html
+<script src="node_modules/pointer-stream/pointer-stream.min.js"></script>
+```
+
+Or using browserify:
+
+```js
+var PointerStream = require('pointer-stream')
+```
+
+#### Usage
 
 ```js
 const pointer = PointerStream({
@@ -59,9 +61,15 @@ to transform the streams in advanced ways.
 
 ```js
 
-// If any of these streams return true, hovering will return false
+// If any of these streams return True
+// `hovering` will return false
+
 const hovering = R.pipe(
-	R.always([pointer.dragging,pointer.pinching,pointer.wheeling])
+	R.always([
+		pointer.dragging
+		,pointer.pinching
+		,pointer.wheeling
+	])
 	,R.anyPass
 	,R.complement
 )
@@ -93,6 +101,33 @@ If your container is offset at all, you can pass a value to
 Subsequent events will be translated based on coords updating.
 
 ---
+
+
+Interface
+---------
+
+Type signature of the `PointerStream`
+constructor.
+
+```js
+{ {offset:{x,y}, scale:{min,max} }} =>
+
+	{ mousedown: stream Number
+	, movement: stream { x: Number, y: Number }
+	, move: stream { x: Number, y: Number }
+	, dragging: stream Boolean
+	, pinching: stream Number
+	, wheeling: stream Number
+	, scale: stream Number
+	, coords: stream { x: Number, y: Number }
+	, end: stream Boolean?
+	, settings:
+		{ scale: { min: Number, max: Number }
+		, offset: { x: stream Number, y: stream Number}
+		}
+	}
+
+```
 
 API
 ---
@@ -155,24 +190,7 @@ specific scale handler.
 `stream Number`
 
 The current scale of the container.  Increments when zooming in
-amd decrements when zooming out.
-
-
-
-	{ mousedown: stream Number
-	, movement: stream { x: Number, y: Number }
-	, move: stream { x: Number, y: Number }
-	, dragging: stream Boolean
-	, pinching: stream Number
-	, wheeling: stream Number
-	, scale: stream Number
-	, coords: stream { x: Number, y: Number }
-	, end: stream Boolean?
-	, settings:
-		{ scale: { min: Number, max: Number }
-		, offset: { x: stream Number, y: stream Number}
-		}
-	}
+and decrements when zooming out.
 
 #### end
 
@@ -188,7 +206,7 @@ All streams will cease to emit new values and will be garbage collected.
 
 #### settings.scale {min,max}
 
-Specific the minimum and maximum scale.  This will clamp the scale
+Specify the minimum and maximum scale.  This will clamp the scale
 on subsequent events.
 
 #### settings.offset {x,y}
@@ -196,4 +214,3 @@ on subsequent events.
 The current offset of your container.  Allows you to inform
 a `pointer` instance if your container has moved.
 This allows the library to calibrate `coords` `move` and `movement`
-

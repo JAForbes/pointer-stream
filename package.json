@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "browserify -t [ babelify --presets [ es2015 ] ] index.es6.js > index.js",
+    "dist": "browserify lib/index.js | uglifyjs -mc > pointer-stream.min.js",
     "prepublish": "npm run dist"
   },
   "author": "james.a.forbes@gmail.com <=> (http://james-forbes.com)",

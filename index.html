@@ -1,0 +1,59 @@
+<style>
+    body {
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+        background-color: #c1bfd0;
+        overflow: hidden;
+    }
+    #usage {
+        font-size: 0.5em;
+        text-align: left;
+    }
+    #box {
+        transform: translate(-5em, -5em) translate(50vw, 50vh);
+        width: 10em;
+        height: 10em;
+        background-color: #e4ebf3;
+        text-align: center;
+        font-size: 2.5em;
+        color: black;
+        font-family: Helvetica;
+    }
+    #container {
+        transform-origin: top left
+    }
+</style>
+<script src='pointer-stream.min.js'></script>
+<body>
+    <div id="container">
+        <div id="box">
+        <pre id="usage"></pre>
+        </div>
+    </div>
+</body>
+
+<script id="code">
+    /**
+     * Pinch / Drag Me
+     */
+
+    var p = PointerStream({
+         scale: { min: 0.5, max: 40 }
+    })
+    var scale = p.scale
+    var xy = p.coords
+
+    p.coords.map(function(){
+        var x = xy().x
+        var y = xy().y
+        container.style.transform = [
+            'translate('+[x+'px',y+'px']+')'
+            ,'scale('+scale()+')'
+        ]
+        .join(' ')
+    })
+</script>
+<script>
+    usage.innerText = code.innerText
+</script>
