@@ -1,6 +1,6 @@
 {
   "name": "pointer-stream",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A tiny stream API for mouse and touch events",
   "main": "index.js",
   "scripts": {
