@@ -37,12 +37,12 @@ const pointer = PointerStream({
 })
 
 // subscribe to changes in scale
-scale.map(function(scale){
+pointer.scale.map(function(scale){
 	container.style.transform = 'scale('+scale+')'
 })
 
 // translate your container
-coords.map(function({x,y}){
+pointer.coords.map(function({x,y}){
 	container.style.transform = 'translate('+x+'px,'+y+'px)'
 })
 
